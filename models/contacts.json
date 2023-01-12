@@ -61,13 +61,25 @@
   },
   {
     "id": "5BZJsfSPTCP3aa8TUdzXw",
-    "name": "Alex",
+    "name": "Al Pacino",
     "email": "goit@mail.com",
     "phone": "(555) 445-5555"
   },
   {
     "id": "mKOUzJ7U5a5LvKf29SRWi",
     "name": "gibli",
+    "email": "nodejs@gmail.com",
+    "phone": "(555) 111-1111"
+  },
+  {
+    "id": "aWvCGHFdZy3qq4yvXd5RM",
+    "name": "ddddd",
+    "email": "nodejs@gmail.com",
+    "phone": "(555) 111-1111"
+  },
+  {
+    "id": "vC52sZ6NUEHioZ7fd9xvD",
+    "name": "dddddffghbv",
     "email": "nodejs@gmail.com",
     "phone": "(555) 111-1111"
   }
