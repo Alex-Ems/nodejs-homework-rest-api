@@ -5,8 +5,7 @@ const {
   updateContactSchema,
 } = require("../../contactSchema/schema.js");
 const {
-  validation,
-  updateValidation,
+  validation
 } = require("../../validation/validation.js");
 const {
   listContacts,
