@@ -1,7 +1,3 @@
-const {
-  contactsSchema,
-  updateContactSchema,
-} = require("../contactSchema/schema.js");
 
 const validation = (schema) => {
   return (req, res, next) => {

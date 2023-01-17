@@ -1,19 +1,19 @@
 const express = require("express");
-
+const { Contact } = require("../../models/contact.js");
 const {
   contactsSchema,
   updateContactSchema,
-} = require("../../contactSchema/schema.js");
-const {
-  validation
-} = require("../../validation/validation.js");
+  favoriteSchema,
+} = require("../../contactSchema/schemaJoi.js");
+const { validation } = require("../../validation/validation.js");
 const {
   listContacts,
   getContactById,
   addContact,
   removeContact,
   updateContact,
-} = require("../../models/contacts.js");
+  updateStatusContact,
+} = require("../../controllers/controller");
 const { json } = require("express");
 
 const router = express.Router();
@@ -29,7 +29,8 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:contactId", async (req, res, next) => {
   try {
-    const contact = await getContactById(req.params.contactId);
+    const { contactId } = req.params;
+    const contact = await getContactById(contactId);
 
     if (!contact) {
       return res.status(404).json({ message: "Not found" });
@@ -71,7 +72,28 @@ router.put(
   async (req, res, next) => {
     try {
       const { contactId } = req.params;
-      const contact = await updateContact(contactId, req.body);
+      const contact = await updateContact(contactId, req.body, {
+        new: true,
+      });
+      if (!contact) {
+        return res.status(404).json({ message: "Not found" });
+      }
+      res.status(200).json(contact);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.patch(
+  "/:contactId/favorite",
+  validation(favoriteSchema),
+  async (req, res, next) => {
+    try {
+      const { contactId } = req.params;
+      const contact = await updateStatusContact(contactId, req.body, {
+        new: true,
+      });
       if (!contact) {
         return res.status(404).json({ message: "Not found" });
       }
