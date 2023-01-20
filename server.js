@@ -8,17 +8,16 @@ mongoose.set("debug", true);
 
 const { HOST_URI, PORT = 3000 } = process.env;
 
-async function main() {
-  try {
-    await mongoose.connect(HOST_URI);
-    console.log("Database connection successful");
-
+mongoose
+  .connect(HOST_URI)
+  .then(() => {
     app.listen(PORT, () => {
       console.log(`Server running. Use our API on port: ${PORT}`);
+      console.log("Database connection successful");
     });
-  } catch (error) {
+  })
+  .catch((error) => {
     console.error("Error while connecting to mongodb", error.message);
     process.exit(1);
-  }
-}
-main();
+  });
+
