@@ -1,12 +1,12 @@
 const express = require("express");
 
 const {
-  contactsSchema,
-  updateContactSchema,
-  favoriteSchema,
-} = require("../../contactSchema/schemaJoi.js");
+  contactsJoiSchema,
+  updateContactJoiSchema,
+  favoriteJoiSchema,
+} = require("../../models/contact");
 
-const { validation, ctrlWrapper } = require("../../middlewares/index");
+const { auth, validation, ctrlWrapper } = require("../../middlewares/index");
 
 const { contacts: ctrl } = require("../../controllers/index");
 
@@ -14,23 +14,23 @@ const { json } = require("express");
 
 const router = express.Router();
 
-router.get("/", ctrlWrapper(ctrl.listContacts));
+router.get("/", auth, ctrlWrapper(ctrl.listContacts));
 
 router.get("/:contactId", ctrlWrapper(ctrl.getContactById));
 
-router.post("/", validation(contactsSchema), ctrlWrapper(ctrl.addContact));
+router.post("/", auth, validation(contactsJoiSchema), ctrlWrapper(ctrl.addContact));
 
 router.delete("/:contactId", ctrlWrapper(ctrl.removeContact));
 
 router.put(
   "/:contactId",
-  validation(updateContactSchema),
+  validation(updateContactJoiSchema),
   ctrlWrapper(ctrl.updateContact)
 );
 
 router.patch(
   "/:contactId/favorite",
-  validation(favoriteSchema),
+  validation(favoriteJoiSchema),
   ctrlWrapper(ctrl.updateFavorite)
 );
 
