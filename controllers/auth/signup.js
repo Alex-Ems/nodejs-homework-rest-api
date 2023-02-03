@@ -17,12 +17,10 @@ const signup = async (req, res) => {
     subscription,
   });
   res.status(201).json({
-    data: {
       user: {
         email,
         subscription,
       },
-    },
   });
 };
 
