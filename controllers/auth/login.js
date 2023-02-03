@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const { Unauthorized } = require("http-errors");
+const { HttpError } = require("http-errors");
 const bcrypt = require("bcrypt");
 
 const { User } = require("../../models");
@@ -9,8 +10,11 @@ const { SECRET_KEY } = process.env;
 const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    if (!user) {
+        throw new HttpError(401, "Email is wrong");
+    }
     const passCompare = bcrypt.compareSync(password, user.password);
-    if (!user || !passCompare) {
+    if (!passCompare) {
       throw new Unauthorized("Email or password is wrong");
     }
 
@@ -20,9 +24,7 @@ const login = async (req, res) => {
     };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1d" });
     await User.findByIdAndUpdate(user._id, { token });
-    res.json({
-        status: "success",
-        code: 201,
+    res.status(201).json({
         data: {
             token
         }

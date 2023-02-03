@@ -12,12 +12,8 @@ const listContacts = async (req, res) => {
   const favoriteFilter = await contacts.filter(contact => contact.favorite);
   const result = favorite ? favoriteFilter : contacts;
 
-  res.json({
-    status: "success",
-    code: 200,
-    data: {
-      result: result
-    },
+  res.status(200).json({
+      result
   });
 };
 

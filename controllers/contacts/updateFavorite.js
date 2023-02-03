@@ -7,15 +7,11 @@ const updateFavorite = async (req, res) => {
     new: true,
   });
   if (!result) {
-    throw await NotFound(`Contact with id : ${contactId} not found`);
+    throw new NotFound(`Contact with id : ${contactId} not found`);
   }
-  res.json({
-    status: "success",
-    code: 200,
+  res.status(200).json({
     message: `Contact with id : ${contactId} updated favorite`,
-    data: {
-      result,
-    },
+    result,
   });
 };
 
