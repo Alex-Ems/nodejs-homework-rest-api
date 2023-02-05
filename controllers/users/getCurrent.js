@@ -1,4 +1,3 @@
-const { User } = require("../../models/index");
 
 const getCurrent = async (req, res) => {
   const { email, subscription } = req.user;
