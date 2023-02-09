@@ -26,13 +26,20 @@ const userSchema = Schema(
       type: String,
       required: true,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
   {
     versionKey: false,
     timestamps: true,
   }
 );
-
 
 const signUpAndLoginJoiSchema = Joi.object({
   password: Joi.string().min(6).required().messages({
@@ -41,11 +48,11 @@ const signUpAndLoginJoiSchema = Joi.object({
   email: Joi.string().email().required().messages({
     "any.required": "Please, you should provide email!",
   }),
-  subscription: Joi.string().valid('starter', 'pro', 'business')
+  subscription: Joi.string().valid("starter", "pro", "business"),
 });
 
 const subscriptionJoiSchema = Joi.object({
-  subscription: Joi.string().valid("starter", "pro", "business").required()
+  subscription: Joi.string().valid("starter", "pro", "business").required(),
 });
 
 const User = model("user", userSchema);
@@ -53,5 +60,5 @@ const User = model("user", userSchema);
 module.exports = {
   User,
   signUpAndLoginJoiSchema,
-  subscriptionJoiSchema
+  subscriptionJoiSchema,
 };
